@@ -308,14 +308,14 @@
 		869EA1E1165AB4EF005877A6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Jon Como (5C23H8QH97)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jon Como (5C23H8QH97)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KeepNote/KeepNote-Prefix.pch";
 				INFOPLIST_FILE = "KeepNote/KeepNote-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "94F19C4B-2D54-4C51-852E-C413AEEAD02F";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "94F19C4B-2D54-4C51-852E-C413AEEAD02F";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -323,14 +323,14 @@
 		869EA1E2165AB4EF005877A6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Jon Como (5C23H8QH97)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jon Como (5C23H8QH97)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KeepNote/KeepNote-Prefix.pch";
 				INFOPLIST_FILE = "KeepNote/KeepNote-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "94F19C4B-2D54-4C51-852E-C413AEEAD02F";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "94F19C4B-2D54-4C51-852E-C413AEEAD02F";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
