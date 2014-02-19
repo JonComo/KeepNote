@@ -8,6 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		862088D8166684DD00DF49CF /* KNInterpreter.m in Sources */ = {isa = PBXBuildFile; fileRef = 862088D7166684DD00DF49CF /* KNInterpreter.m */; };
+		86752A4418B544E10023178E /* KNNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86752A4318B544E10023178E /* KNNoteViewController.m */; };
+		86752A4F18B5471E0023178E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86752A4E18B5471E0023178E /* Accelerate.framework */; };
+		86752A5118B549B50023178E /* gradientBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 86752A5018B549B50023178E /* gradientBG.png */; };
+		86752A5318B54EC70023178E /* keepNoteLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 86752A5218B54EC70023178E /* keepNoteLogo.png */; };
+		86752A5618B558990023178E /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 86752A5518B558990023178E /* MBProgressHUD.m */; };
+		86752A5B18B55CE30023178E /* icon_114.png in Resources */ = {isa = PBXBuildFile; fileRef = 86752A5818B55CE30023178E /* icon_114.png */; };
+		86752A5C18B55CE30023178E /* icon_120.png in Resources */ = {isa = PBXBuildFile; fileRef = 86752A5918B55CE30023178E /* icon_120.png */; };
+		86752A5D18B55CE30023178E /* icon_57.png in Resources */ = {isa = PBXBuildFile; fileRef = 86752A5A18B55CE30023178E /* icon_57.png */; };
+		86752A5F18B55D060023178E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86752A5E18B55D060023178E /* Images.xcassets */; };
+		86752A6418B561F00023178E /* KNTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 86752A6318B561F00023178E /* KNTextView.m */; };
 		868790691669601F0072E178 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 868790681669601F0072E178 /* Default.png */; };
 		8687906B166960220072E178 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8687906A166960220072E178 /* Default@2x.png */; };
 		8687906D166960240072E178 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8687906C166960240072E178 /* Default-568h@2x.png */; };
@@ -19,21 +29,26 @@
 		869EA1D1165AB4EF005877A6 /* KNAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 869EA1D0165AB4EF005877A6 /* KNAppDelegate.m */; };
 		869EA1DA165AB4EF005877A6 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 869EA1D8165AB4EF005877A6 /* MainStoryboard.storyboard */; };
 		869EA1DD165AB4EF005877A6 /* KNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 869EA1DC165AB4EF005877A6 /* KNViewController.m */; };
-		869EA1EB165AB8E6005877A6 /* backgroundTexture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 869EA1E4165AB8E6005877A6 /* backgroundTexture@2x.png */; };
-		869EA1ED165AB8E6005877A6 /* note@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 869EA1E6165AB8E6005877A6 /* note@2x.png */; };
-		869EA1F0165AB8E6005877A6 /* notePadBottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 869EA1E9165AB8E6005877A6 /* notePadBottom@2x.png */; };
-		869EA1F1165AB8E6005877A6 /* notePadTop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 869EA1EA165AB8E6005877A6 /* notePadTop@2x.png */; };
-		86AE29301668503B00DE7F68 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 86AE292F1668503B00DE7F68 /* icon.png */; };
-		86AE29331668503E00DE7F68 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86AE29321668503E00DE7F68 /* icon@2x.png */; };
 		86AE2935166850E100DE7F68 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86AE2934166850E100DE7F68 /* EventKit.framework */; };
-		86EFB378167598FF00CB72FE /* deleted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86EFB376167598FF00CB72FE /* deleted@2x.png */; };
-		86EFB379167598FF00CB72FE /* saved@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86EFB377167598FF00CB72FE /* saved@2x.png */; };
 		86EFB37C16759A9900CB72FE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86EFB37B16759A9900CB72FE /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		862088D6166684DD00DF49CF /* KNInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNInterpreter.h; sourceTree = "<group>"; };
 		862088D7166684DD00DF49CF /* KNInterpreter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNInterpreter.m; sourceTree = "<group>"; };
+		86752A4218B544E10023178E /* KNNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNNoteViewController.h; sourceTree = "<group>"; };
+		86752A4318B544E10023178E /* KNNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNNoteViewController.m; sourceTree = "<group>"; };
+		86752A4E18B5471E0023178E /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		86752A5018B549B50023178E /* gradientBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradientBG.png; sourceTree = "<group>"; };
+		86752A5218B54EC70023178E /* keepNoteLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keepNoteLogo.png; sourceTree = "<group>"; };
+		86752A5418B558990023178E /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = ../Libraries/MBProgressHUD/MBProgressHUD.h; sourceTree = "<group>"; };
+		86752A5518B558990023178E /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = ../Libraries/MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
+		86752A5818B55CE30023178E /* icon_114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_114.png; sourceTree = "<group>"; };
+		86752A5918B55CE30023178E /* icon_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_120.png; sourceTree = "<group>"; };
+		86752A5A18B55CE30023178E /* icon_57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_57.png; sourceTree = "<group>"; };
+		86752A5E18B55D060023178E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		86752A6218B561F00023178E /* KNTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNTextView.h; sourceTree = "<group>"; };
+		86752A6318B561F00023178E /* KNTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNTextView.m; sourceTree = "<group>"; };
 		868790681669601F0072E178 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		8687906A166960220072E178 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		8687906C166960240072E178 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -50,15 +65,7 @@
 		869EA1D9165AB4EF005877A6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		869EA1DB165AB4EF005877A6 /* KNViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KNViewController.h; sourceTree = "<group>"; };
 		869EA1DC165AB4EF005877A6 /* KNViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KNViewController.m; sourceTree = "<group>"; };
-		869EA1E4165AB8E6005877A6 /* backgroundTexture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backgroundTexture@2x.png"; sourceTree = "<group>"; };
-		869EA1E6165AB8E6005877A6 /* note@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "note@2x.png"; sourceTree = "<group>"; };
-		869EA1E9165AB8E6005877A6 /* notePadBottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notePadBottom@2x.png"; sourceTree = "<group>"; };
-		869EA1EA165AB8E6005877A6 /* notePadTop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notePadTop@2x.png"; sourceTree = "<group>"; };
-		86AE292F1668503B00DE7F68 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
-		86AE29321668503E00DE7F68 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		86AE2934166850E100DE7F68 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
-		86EFB376167598FF00CB72FE /* deleted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deleted@2x.png"; sourceTree = "<group>"; };
-		86EFB377167598FF00CB72FE /* saved@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "saved@2x.png"; sourceTree = "<group>"; };
 		86EFB37B16759A9900CB72FE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -67,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86752A4F18B5471E0023178E /* Accelerate.framework in Frameworks */,
 				86EFB37C16759A9900CB72FE /* QuartzCore.framework in Frameworks */,
 				86AE2935166850E100DE7F68 /* EventKit.framework in Frameworks */,
 				869EA1C1165AB4EF005877A6 /* UIKit.framework in Frameworks */,
@@ -78,14 +86,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		86752A5718B55CE30023178E /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				86752A5818B55CE30023178E /* icon_114.png */,
+				86752A5918B55CE30023178E /* icon_120.png */,
+				86752A5A18B55CE30023178E /* icon_57.png */,
+			);
+			path = icons;
+			sourceTree = "<group>";
+		};
+		86752A6018B561DA0023178E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				869EA1DB165AB4EF005877A6 /* KNViewController.h */,
+				869EA1DC165AB4EF005877A6 /* KNViewController.m */,
+				86752A4218B544E10023178E /* KNNoteViewController.h */,
+				86752A4318B544E10023178E /* KNNoteViewController.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		86752A6118B561DE0023178E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				862088D6166684DD00DF49CF /* KNInterpreter.h */,
+				862088D7166684DD00DF49CF /* KNInterpreter.m */,
+				86752A6218B561F00023178E /* KNTextView.h */,
+				86752A6318B561F00023178E /* KNTextView.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		869EA1B1165AB4EF005877A6 = {
 			isa = PBXGroup;
 			children = (
 				8687906C166960240072E178 /* Default-568h@2x.png */,
 				8687906A166960220072E178 /* Default@2x.png */,
 				868790681669601F0072E178 /* Default.png */,
-				86AE29321668503E00DE7F68 /* icon@2x.png */,
-				86AE292F1668503B00DE7F68 /* icon.png */,
 				869EA1C6165AB4EF005877A6 /* KeepNote */,
 				869EA1BF165AB4EF005877A6 /* Frameworks */,
 				869EA1BD165AB4EF005877A6 /* Products */,
@@ -103,6 +141,9 @@
 		869EA1BF165AB4EF005877A6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				86752A5418B558990023178E /* MBProgressHUD.h */,
+				86752A5518B558990023178E /* MBProgressHUD.m */,
+				86752A4E18B5471E0023178E /* Accelerate.framework */,
 				86EFB37B16759A9900CB72FE /* QuartzCore.framework */,
 				86AE2934166850E100DE7F68 /* EventKit.framework */,
 				869EA1C0165AB4EF005877A6 /* UIKit.framework */,
@@ -119,10 +160,9 @@
 				869EA1CF165AB4EF005877A6 /* KNAppDelegate.h */,
 				869EA1D0165AB4EF005877A6 /* KNAppDelegate.m */,
 				869EA1D8165AB4EF005877A6 /* MainStoryboard.storyboard */,
-				869EA1DB165AB4EF005877A6 /* KNViewController.h */,
-				869EA1DC165AB4EF005877A6 /* KNViewController.m */,
-				862088D6166684DD00DF49CF /* KNInterpreter.h */,
-				862088D7166684DD00DF49CF /* KNInterpreter.m */,
+				86752A6018B561DA0023178E /* View */,
+				86752A6118B561DE0023178E /* Model */,
+				86752A5E18B55D060023178E /* Images.xcassets */,
 				869EA1C7165AB4EF005877A6 /* Supporting Files */,
 			);
 			path = KeepNote;
@@ -142,12 +182,9 @@
 		869EA1E3165AB8E6005877A6 /* artwork */ = {
 			isa = PBXGroup;
 			children = (
-				86EFB376167598FF00CB72FE /* deleted@2x.png */,
-				86EFB377167598FF00CB72FE /* saved@2x.png */,
-				869EA1E4165AB8E6005877A6 /* backgroundTexture@2x.png */,
-				869EA1E6165AB8E6005877A6 /* note@2x.png */,
-				869EA1E9165AB8E6005877A6 /* notePadBottom@2x.png */,
-				869EA1EA165AB8E6005877A6 /* notePadTop@2x.png */,
+				86752A5718B55CE30023178E /* icons */,
+				86752A5218B54EC70023178E /* keepNoteLogo.png */,
+				86752A5018B549B50023178E /* gradientBG.png */,
 			);
 			path = artwork;
 			sourceTree = "<group>";
@@ -204,19 +241,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86752A5118B549B50023178E /* gradientBG.png in Resources */,
+				86752A5C18B55CE30023178E /* icon_120.png in Resources */,
 				869EA1CB165AB4EF005877A6 /* InfoPlist.strings in Resources */,
 				869EA1DA165AB4EF005877A6 /* MainStoryboard.storyboard in Resources */,
-				869EA1EB165AB8E6005877A6 /* backgroundTexture@2x.png in Resources */,
-				869EA1ED165AB8E6005877A6 /* note@2x.png in Resources */,
-				869EA1F0165AB8E6005877A6 /* notePadBottom@2x.png in Resources */,
-				869EA1F1165AB8E6005877A6 /* notePadTop@2x.png in Resources */,
-				86AE29301668503B00DE7F68 /* icon.png in Resources */,
-				86AE29331668503E00DE7F68 /* icon@2x.png in Resources */,
+				86752A5F18B55D060023178E /* Images.xcassets in Resources */,
 				868790691669601F0072E178 /* Default.png in Resources */,
 				8687906B166960220072E178 /* Default@2x.png in Resources */,
+				86752A5B18B55CE30023178E /* icon_114.png in Resources */,
 				8687906D166960240072E178 /* Default-568h@2x.png in Resources */,
-				86EFB378167598FF00CB72FE /* deleted@2x.png in Resources */,
-				86EFB379167598FF00CB72FE /* saved@2x.png in Resources */,
+				86752A5D18B55CE30023178E /* icon_57.png in Resources */,
+				86752A5318B54EC70023178E /* keepNoteLogo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,9 +262,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86752A4418B544E10023178E /* KNNoteViewController.m in Sources */,
+				86752A5618B558990023178E /* MBProgressHUD.m in Sources */,
 				869EA1CD165AB4EF005877A6 /* main.m in Sources */,
 				869EA1D1165AB4EF005877A6 /* KNAppDelegate.m in Sources */,
 				869EA1DD165AB4EF005877A6 /* KNViewController.m in Sources */,
+				86752A6418B561F00023178E /* KNTextView.m in Sources */,
 				862088D8166684DD00DF49CF /* KNInterpreter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -308,11 +346,14 @@
 		869EA1E1165AB4EF005877A6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KeepNote/KeepNote-Prefix.pch";
 				INFOPLIST_FILE = "KeepNote/KeepNote-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -323,14 +364,17 @@
 		869EA1E2165AB4EF005877A6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Jon Como (5C23H8QH97)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jon Como (5C23H8QH97)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KeepNote/KeepNote-Prefix.pch";
 				INFOPLIST_FILE = "KeepNote/KeepNote-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "77DEAAC4-4A34-4DA9-97D9-F3999BAE3F2A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77DEAAC4-4A34-4DA9-97D9-F3999BAE3F2A";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

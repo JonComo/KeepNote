@@ -25,10 +25,10 @@
 #define Fortnights      @{@"multiplier" : @(NDay * 14),           @"terms" : @[@"fortnights", @"fortnight"] }
 #define Weeks           @{@"multiplier" : @(NDay * 7),            @"terms" : @[@"weeks", @"week", @"wks"] }
 #define Days            @{@"multiplier" : @(NDay),                @"terms" : @[@"days", @"day", @"d", @"earth rotations", @"earth rotation"] }
-#define Hours           @{@"multiplier" : @(60 * 60),                     @"terms" : @[@"hours", @"hour", @"hrs", @"h"] }
+#define Hours           @{@"multiplier" : @(60 * 60),                     @"terms" : @[@"hours", @"hour", @"hrs"] }
 #define Kiloseconds     @{@"multiplier" : @(1000),                        @"terms" : @[@"kiloseconds", @"kilosecond"] }
 #define Moments         @{@"multiplier" : @(90),                          @"terms" : @[@"moment", @"moments"] } //90 seconds
-#define Minutes         @{@"multiplier" : @(60),                          @"terms" : @[@"minutes", @"minute", @"min", @"mins"] }
+#define Minutes         @{@"multiplier" : @(60),                          @"terms" : @[@"minutes", @"minute", @"min", @"mins", @"m"] }
 #define Seconds         @{@"multiplier" : @(1),                           @"terms" : @[@"seconds", @"second", @"secs", @"sec", @"s"] }
 #define Deciseconds     @{@"multiplier" : @(0.1),                         @"terms" : @[@"decisecond", @"deciseconds"] }
 #define Centiseconds    @{@"multiplier" : @(0.01),                        @"terms" : @[@"centiseconds", @"centiseconds"] }
