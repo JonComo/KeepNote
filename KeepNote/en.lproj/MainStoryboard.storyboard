@@ -17,71 +17,54 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gradientBG.png" translatesAutoresizingMaskIntoConstraints="NO" id="OT6-8g-GQT">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="keepNoteLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="HpF-0R-oQf">
+                                <rect key="frame" x="18" y="133" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="keepNoteLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="HpF-0R-oQf">
-                                <rect key="frame" x="36" y="150" width="100" height="100"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ggy-e1-iWs">
+                                <rect key="frame" x="0.0" y="123" width="320" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Meeting in 20 min" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SNE-zq-itD" customClass="KNTextView">
-                                <rect key="frame" x="20" y="40" width="280" height="100"/>
+                                <color key="backgroundColor" red="1" green="0.82691124831114815" blue="0.00038747176139786177" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" text="Meeting in 20 min" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SNE-zq-itD" customClass="KNTextView">
+                                <rect key="frame" x="20" y="40" width="280" height="70"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="Bux-XD-ALU"/>
+                                    <constraint firstAttribute="height" constant="70" id="Bux-XD-ALU"/>
                                     <constraint firstAttribute="width" constant="280" id="XRC-bS-9Qb"/>
                                 </constraints>
                                 <color key="textColor" red="0.97604482962448846" green="0.97459013661932059" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" keyboardAppearance="alert" returnKeyType="done"/>
                                 <dataDetectorType key="dataDetectorTypes" calendarEvent="YES"/>
                             </textView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Time" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="140" translatesAutoresizingMaskIntoConstraints="NO" id="lM2-mn-3zu">
-                                <rect key="frame" x="169" y="150" width="140" height="35"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="lM2-mn-3zu">
+                                <rect key="frame" x="126" y="147" width="169" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.9960784912109375" green="0.94509810209274292" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ggy-e1-iWs">
-                                <rect key="frame" x="0.0" y="140" width="320" height="2"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Month Year" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="gfn-dB-QJY">
+                                <rect key="frame" x="126" y="187" width="169" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Day" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="140" translatesAutoresizingMaskIntoConstraints="NO" id="4ST-7s-adG">
-                                <rect key="frame" x="169" y="185" width="140" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Month Year" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="140" translatesAutoresizingMaskIntoConstraints="NO" id="gfn-dB-QJY">
-                                <rect key="frame" x="169" y="220" width="140" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.9960784912109375" green="0.94509810209274292" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.019559762773722629" green="0.0024235857664233577" blue="0.019217609489051091" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="OT6-8g-GQT" secondAttribute="trailing" id="K97-ak-Zbt"/>
                             <constraint firstItem="SNE-zq-itD" firstAttribute="top" secondItem="ZDX-XS-L4O" secondAttribute="bottom" constant="20" id="NhQ-U7-rqa"/>
-                            <constraint firstItem="Xuq-Xe-FGB" firstAttribute="top" secondItem="OT6-8g-GQT" secondAttribute="bottom" id="WZE-tA-mhy"/>
-                            <constraint firstItem="OT6-8g-GQT" firstAttribute="top" secondItem="pry-2c-CKg" secondAttribute="top" id="gKj-Nz-dQ4"/>
                             <constraint firstAttribute="centerX" secondItem="SNE-zq-itD" secondAttribute="centerX" id="gYa-oU-TL1"/>
-                            <constraint firstItem="OT6-8g-GQT" firstAttribute="leading" secondItem="pry-2c-CKg" secondAttribute="leading" id="rns-jn-k3U"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <connections>
                         <outlet property="imageViewLogo" destination="HpF-0R-oQf" id="Uab-e8-OBI"/>
-                        <outlet property="labelDay" destination="4ST-7s-adG" id="WKy-mX-ZOs"/>
                         <outlet property="labelMonthYear" destination="gfn-dB-QJY" id="uGl-vO-mc7"/>
                         <outlet property="labelTime" destination="lM2-mn-3zu" id="WUg-ZI-PBt"/>
                         <outlet property="textViewNote" destination="SNE-zq-itD" id="IhZ-AQ-1P7"/>
@@ -93,7 +76,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="gradientBG.png" width="640" height="1136"/>
         <image name="keepNoteLogo.png" width="200" height="200"/>
     </resources>
     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>

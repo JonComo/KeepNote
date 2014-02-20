@@ -16,7 +16,7 @@
 
 #import <EventKit/EventKit.h>
 
-#define EXAMPLES @[@"Meeting in 20 min", @"Perform ritual in 20 moons", @"Dinner in 5 min", @"Kick son out in 16 years", @"Hot date on 1/12/13, hopefully", @"Start diet in 15 s", @"Make a lot of money, then give it to charity, in 6 months", @"Run marathon in 2 weeks", @"Quit job in 2 hours", @"Swim in 6 months", @"Summer again in 1 solar orbit", @"Lunch in 10", @"Enjoy life in 12 hours", @"Pulse my laser twice in 2 femtoseconds", @"Murder the king in 12.5 moments", @"Be there in 1 moment", @"Comprehend time smaller than one plank time unit, in 0.5 PTUs", @"Start a new fashion trend in 1.2 generations", @"Wonder why I use leap year as a time unit in 3 leap years", @"Watch 8 molecules sequentially fluoresce in 8 nanoseconds", @"Enjoy the olympics in 2 olympiads", @"Wish my parents goodluck in 2 lustrums", @"Buy new shoes in 1 decade", @"Plan for the future, in 2 gigaseconds", @"Plot my position, in 2 fortnights", @"Doctors on Jan 1, 2014 8 am", @"Meeting on feb 2, 9am"]
+#define EXAMPLES @[@"Meeting in 20 min", @"Perform ritual in 20 moons", @"Dinner in 5 min", @"Kick son out in 16 years", @"Hot date on 1/12/13, hopefully", @"Start diet in 15 s", @"Make a lot of money, then give it to charity, in 6 months", @"Run marathon in 2 weeks", @"Quit job in 2 hours", @"Swim in 6 months", @"Summer again in 1 solar orbit", @"Lunch in 10", @"Enjoy life in 12 hours", @"Pulse my laser twice in 2 femtoseconds", @"Murder the king in 12.5 moments", @"Be there in 1 moment", @"Comprehend time smaller than one plank time unit, in 0.5 PTUs", @"Start a new fashion trend in 1.2 generations", @"Enjoy the olympics in 2 olympiads", @"Wish my parents goodluck in 2 lustrums", @"Buy new shoes in 1 decade", @"Plan for the future, in 2 gigaseconds", @"Plot my position, in 2 fortnights", @"Doctors on Jan 1, 2014 8 am", @"Meeting on feb 2, 9am"]
 
 @interface KNNoteViewController () <KNInterpreterDelegate, KNTextViewDelegate>
 {
@@ -66,7 +66,7 @@
     
     //@"h:mm a, EEE, MMM d, yyyy";
     
-    [formatterTime setDateFormat:@"h:mm a"];
+    [formatterTime setDateFormat:@"EEE, h:mm a"];
     [formatterDay setDateFormat:@"EEEE"];
     [formatterMonthYear setDateFormat:@"MMM, d, yyyy"];
     
@@ -89,6 +89,10 @@
     wasShowingExamples = NO;
     
     textViewNote.text = @"";
+    
+    labelDay.alpha = 0;
+    labelTime.alpha = 0;
+    labelMonthYear.alpha = 0;
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -133,6 +137,13 @@
 
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    if (wasShowingExamples){
+        [self stopExamples];
+        textView.text = @"";
+        
+        return NO;
+    }
+    
     NSString *fullString = [textViewNote.text stringByReplacingCharactersInRange:range withString:text];
     
     [interpreter interpretString:fullString];
@@ -152,7 +163,7 @@
     labelMonthYear.alpha = 1;
     
     labelTime.text = [formatterTime stringFromDate:date];
-    labelDay.text = [formatterDay stringFromDate:date];
+    //labelDay.text = [formatterDay stringFromDate:date];
     labelMonthYear.text = [formatterMonthYear stringFromDate:date];
 }
 
@@ -223,6 +234,8 @@
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:textViewNote animated:YES];
     
+    hud.color = [UIColor yellowColor];
+    hud.labelColor = [UIColor blackColor];
     hud.mode = MBProgressHUDModeText;
     hud.labelText = message;
     
