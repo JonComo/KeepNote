@@ -17,6 +17,9 @@
 		86752A6418B561F00023178E /* KNTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 86752A6318B561F00023178E /* KNTextView.m */; };
 		8687906B166960220072E178 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8687906A166960220072E178 /* Default@2x.png */; };
 		8687906D166960240072E178 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8687906C166960240072E178 /* Default-568h@2x.png */; };
+		86901D6118B80B0D008CB6F9 /* KNRemindersManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 86901D6018B80B0D008CB6F9 /* KNRemindersManager.m */; };
+		86901D6318B812CB008CB6F9 /* reminderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86901D6218B812CB008CB6F9 /* reminderCell.xib */; };
+		86901D6618B81676008CB6F9 /* KNReminderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 86901D6518B81676008CB6F9 /* KNReminderCell.m */; };
 		869EA1C1165AB4EF005877A6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 869EA1C0165AB4EF005877A6 /* UIKit.framework */; };
 		869EA1C3165AB4EF005877A6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 869EA1C2165AB4EF005877A6 /* Foundation.framework */; };
 		869EA1C5165AB4EF005877A6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 869EA1C4165AB4EF005877A6 /* CoreGraphics.framework */; };
@@ -44,6 +47,11 @@
 		86752A6318B561F00023178E /* KNTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNTextView.m; sourceTree = "<group>"; };
 		8687906A166960220072E178 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		8687906C166960240072E178 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		86901D5F18B80B0D008CB6F9 /* KNRemindersManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNRemindersManager.h; sourceTree = "<group>"; };
+		86901D6018B80B0D008CB6F9 /* KNRemindersManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNRemindersManager.m; sourceTree = "<group>"; };
+		86901D6218B812CB008CB6F9 /* reminderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = reminderCell.xib; sourceTree = "<group>"; };
+		86901D6418B81676008CB6F9 /* KNReminderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNReminderCell.h; sourceTree = "<group>"; };
+		86901D6518B81676008CB6F9 /* KNReminderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNReminderCell.m; sourceTree = "<group>"; };
 		869EA1BC165AB4EF005877A6 /* KeepNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeepNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		869EA1C0165AB4EF005877A6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		869EA1C2165AB4EF005877A6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -93,6 +101,9 @@
 				869EA1DC165AB4EF005877A6 /* KNViewController.m */,
 				86752A4218B544E10023178E /* KNNoteViewController.h */,
 				86752A4318B544E10023178E /* KNNoteViewController.m */,
+				86901D6218B812CB008CB6F9 /* reminderCell.xib */,
+				86901D6418B81676008CB6F9 /* KNReminderCell.h */,
+				86901D6518B81676008CB6F9 /* KNReminderCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -104,6 +115,8 @@
 				862088D7166684DD00DF49CF /* KNInterpreter.m */,
 				86752A6218B561F00023178E /* KNTextView.h */,
 				86752A6318B561F00023178E /* KNTextView.m */,
+				86901D5F18B80B0D008CB6F9 /* KNRemindersManager.h */,
+				86901D6018B80B0D008CB6F9 /* KNRemindersManager.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -236,6 +249,7 @@
 				8687906B166960220072E178 /* Default@2x.png in Resources */,
 				8687906D166960240072E178 /* Default-568h@2x.png in Resources */,
 				86752A5318B54EC70023178E /* keepNoteLogo.png in Resources */,
+				86901D6318B812CB008CB6F9 /* reminderCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,8 +262,10 @@
 			files = (
 				86752A4418B544E10023178E /* KNNoteViewController.m in Sources */,
 				86752A5618B558990023178E /* MBProgressHUD.m in Sources */,
+				86901D6618B81676008CB6F9 /* KNReminderCell.m in Sources */,
 				869EA1CD165AB4EF005877A6 /* main.m in Sources */,
 				869EA1D1165AB4EF005877A6 /* KNAppDelegate.m in Sources */,
+				86901D6118B80B0D008CB6F9 /* KNRemindersManager.m in Sources */,
 				869EA1DD165AB4EF005877A6 /* KNViewController.m in Sources */,
 				86752A6418B561F00023178E /* KNTextView.m in Sources */,
 				862088D8166684DD00DF49CF /* KNInterpreter.m in Sources */,
