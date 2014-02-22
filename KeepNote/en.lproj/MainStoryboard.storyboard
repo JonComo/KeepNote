@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="keepNoteLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="HpF-0R-oQf">
-                                <rect key="frame" x="18" y="133" width="100" height="100"/>
+                                <rect key="frame" x="14" y="133" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ggy-e1-iWs">
@@ -57,6 +57,7 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.019559762773722629" green="0.0024235857664233577" blue="0.019217609489051091" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.99607843137254903" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="SNE-zq-itD" firstAttribute="top" secondItem="ZDX-XS-L4O" secondAttribute="bottom" constant="20" id="NhQ-U7-rqa"/>
                             <constraint firstAttribute="centerX" secondItem="SNE-zq-itD" secondAttribute="centerX" id="gYa-oU-TL1"/>

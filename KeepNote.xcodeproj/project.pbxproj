@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		862088D8166684DD00DF49CF /* KNInterpreter.m in Sources */ = {isa = PBXBuildFile; fileRef = 862088D7166684DD00DF49CF /* KNInterpreter.m */; };
+		863140B718B8596000F4708D /* KNGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = 863140B618B8596000F4708D /* KNGraphics.m */; };
 		86752A4418B544E10023178E /* KNNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86752A4318B544E10023178E /* KNNoteViewController.m */; };
 		86752A4F18B5471E0023178E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86752A4E18B5471E0023178E /* Accelerate.framework */; };
 		86752A5318B54EC70023178E /* keepNoteLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 86752A5218B54EC70023178E /* keepNoteLogo.png */; };
@@ -35,6 +36,8 @@
 /* Begin PBXFileReference section */
 		862088D6166684DD00DF49CF /* KNInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNInterpreter.h; sourceTree = "<group>"; };
 		862088D7166684DD00DF49CF /* KNInterpreter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNInterpreter.m; sourceTree = "<group>"; };
+		863140B518B8596000F4708D /* KNGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNGraphics.h; sourceTree = "<group>"; };
+		863140B618B8596000F4708D /* KNGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNGraphics.m; sourceTree = "<group>"; };
 		86752A4218B544E10023178E /* KNNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNNoteViewController.h; sourceTree = "<group>"; };
 		86752A4318B544E10023178E /* KNNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNNoteViewController.m; sourceTree = "<group>"; };
 		86752A4E18B5471E0023178E /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
@@ -117,6 +120,8 @@
 				86752A6318B561F00023178E /* KNTextView.m */,
 				86901D5F18B80B0D008CB6F9 /* KNRemindersManager.h */,
 				86901D6018B80B0D008CB6F9 /* KNRemindersManager.m */,
+				863140B518B8596000F4708D /* KNGraphics.h */,
+				863140B618B8596000F4708D /* KNGraphics.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -217,7 +222,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = KN;
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Jon Como";
 			};
 			buildConfigurationList = 869EA1B6165AB4EF005877A6 /* Build configuration list for PBXProject "KeepNote" */;
@@ -261,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				86752A4418B544E10023178E /* KNNoteViewController.m in Sources */,
+				863140B718B8596000F4708D /* KNGraphics.m in Sources */,
 				86752A5618B558990023178E /* MBProgressHUD.m in Sources */,
 				86901D6618B81676008CB6F9 /* KNReminderCell.m in Sources */,
 				869EA1CD165AB4EF005877A6 /* main.m in Sources */,
@@ -317,6 +323,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;

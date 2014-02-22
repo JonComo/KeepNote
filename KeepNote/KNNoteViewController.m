@@ -8,6 +8,8 @@
 
 #import "KNNoteViewController.h"
 
+#import "KNGraphics.h"
+
 #import "KNInterpreter.h"
 
 #import "MBProgressHUD.h"
@@ -17,8 +19,9 @@
 #import "KNRemindersManager.h"
 
 #import <EventKit/EventKit.h>
+#import "KNReminderCell.h"
 
-#define EXAMPLES @[@"Meeting in 20 min", @"Perform ritual in 20 moons", @"Dinner in 5 min", @"Kick son out in 16 years", @"Hot date on 1/12/13, hopefully", @"Start diet in 15 s", @"Make a lot of money, then give it to charity, in 6 months", @"Run marathon in 2 weeks", @"Quit job in 2 hours", @"Swim in 6 months", @"Summer again in 1 solar orbit", @"Lunch in 10", @"Enjoy life in 12 hours", @"Pulse my laser twice in 2 femtoseconds", @"Murder the king in 12.5 moments", @"Be there in 1 moment", @"Learn about plank time units, in 0.5 PTUs", @"Start a new fashion trend in 1.2 generations", @"Enjoy the olympics in 2 olympiads", @"Wish my parents goodluck in 2 lustrums", @"Buy new shoes in 1 decade", @"Plan for the future, in 2 gigaseconds", @"Plot my position, in 2 fortnights", @"Doctors on Jan 1, 2014 8 am", @"Meeting on feb 2, 9am"]
+#define EXAMPLES @[@"Meeting in 20 min", @"Perform ritual in 20 moons", @"Dinner in 5 min", @"Kick son out in 16 years", @"Hot date on 1/12/13, hopefully", @"Start diet in 15 s", @"Make money, then give it to charity, in 6 months", @"Run marathon in 2 weeks", @"Quit job in 2 hours", @"Swim in 6 months", @"Summer again in 1 solar orbit", @"Lunch in 10", @"Enjoy life in 12 hours", @"Pulse my laser twice in 2 femtoseconds", @"Murder the king in 12.5 moments", @"Be there in 1 moment", @"Learn about plank time units, in 0.5 PTUs", @"Start a new fashion trend in 1.2 generations", @"Enjoy the olympics in 2 olympiads", @"Wish my parents goodluck in 2 lustrums", @"Buy new shoes in 1 decade", @"Plan for the future, in 2 gigaseconds", @"Plot my position, in 2 fortnights", @"Doctors on Jan 1, 2014 8 am", @"Meeting on feb 2, 9am"]
 
 @interface KNNoteViewController () <KNInterpreterDelegate, KNTextViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 {
@@ -40,7 +43,16 @@
     BOOL wasShowingExamples;
     
     //All reminders
+    UIView *viewDim;
+    UIView *viewDepth;
     UICollectionView *collectionViewReminders;
+    NSInteger selectedIndex;
+    CGSize cellSize;
+    
+    UISegmentedControl *segmentFilter;
+    UISegmentedControl *segmentCompleted;
+    
+    UIRefreshControl *refresh;
 }
 
 @end
@@ -65,21 +77,20 @@
     
     interpreter = [[KNInterpreter alloc] initWithDelegate:self];
     
-    textViewNote.layer.cornerRadius = 6;
-    
     formatterTime = [NSDateFormatter new];
     formatterDay = [NSDateFormatter new];
     formatterMonthYear = [NSDateFormatter new];
     
     [imageViewLogo setUserInteractionEnabled:YES];
     [imageViewLogo addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewAllReminders)]];
-    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideReminders)]];
     
     //@"h:mm a, EEE, MMM d, yyyy";
     
     [formatterTime setDateFormat:@"EEE, h:mm a"];
     [formatterDay setDateFormat:@"EEEE"];
     [formatterMonthYear setDateFormat:@"MMM, d, yyyy"];
+    
+    selectedIndex = INT_MAX;
     
     [self startExamples];
 }
@@ -127,19 +138,89 @@
 {
     if (!collectionViewReminders)
     {
+        float p = 20; //padding
+        
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        layout.itemSize = CGSizeMake(280, 44);
-        float p = 40;
-        collectionViewReminders = [[UICollectionView alloc] initWithFrame:CGRectMake(p, p, self.view.frame.size.width - p*2, self.view.frame.size.height - p*2) collectionViewLayout:layout];
+        cellSize = CGSizeMake(self.view.frame.size.width - p*2, 60);
+        layout.itemSize = cellSize;
+        layout.minimumInteritemSpacing = 0;
+        layout.minimumLineSpacing = 0;
+        
+        CGRect collectionViewFrame = CGRectMake(p, p*2, self.view.frame.size.width - p*2, self.view.frame.size.width - p*2);
+        
+        segmentFilter = [[UISegmentedControl alloc] initWithItems:@[@"Notes", @"Reminders"]];
+        segmentFilter.frame = CGRectMake(p, collectionViewFrame.size.height + collectionViewFrame.origin.y + p, self.view.frame.size.width - p*2, 44);
+        segmentFilter.tintColor = [KNGraphics tintColor];
+        segmentFilter.selectedSegmentIndex = 0;
+        [segmentFilter addTarget:self action:@selector(segmentedFilterChanged:) forControlEvents:UIControlEventValueChanged];
+        
+        segmentCompleted = [[UISegmentedControl alloc] initWithItems:@[@"All", @"Uncompleted"]];
+        segmentCompleted.frame = CGRectOffset(segmentFilter.frame, 0, segmentFilter.frame.size.height + p);
+        segmentCompleted.selectedSegmentIndex = 1;
+        [segmentCompleted addTarget:self action:@selector(segmentedCompletedChanged:) forControlEvents:UIControlEventValueChanged];
+        
+        collectionViewReminders = [[UICollectionView alloc] initWithFrame:collectionViewFrame collectionViewLayout:layout];
         [collectionViewReminders registerNib:[UINib nibWithNibName:@"reminderCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"reminderCell"];
+        
+        collectionViewReminders.clipsToBounds = YES;
+        collectionViewReminders.layer.cornerRadius = 3;
+        collectionViewReminders.backgroundColor = [UIColor whiteColor];
+        
+        collectionViewReminders.alwaysBounceVertical = YES;
+        
         collectionViewReminders.dataSource = self;
         collectionViewReminders.delegate = self;
+        
+        refresh = [[UIRefreshControl alloc] init];
+        [collectionViewReminders addSubview:refresh];
+        [refresh addTarget:self action:@selector(refreshReminders) forControlEvents:UIControlEventValueChanged];
+        
+        viewDim = [[UIView alloc] initWithFrame:self.view.frame];
+        viewDim.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+        [viewDim addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideReminders)]];
+        
+        viewDepth = [[UIView alloc] initWithFrame:collectionViewReminders.frame];
+        viewDepth.frame = CGRectOffset(viewDepth.frame, 0, 4);
+        viewDepth.backgroundColor = [UIColor colorWithRed:0.835 green:0.620 blue:0.000 alpha:1.000];
+        viewDepth.layer.cornerRadius = collectionViewReminders.layer.cornerRadius;
     }
+    
+    [self.view addSubview:viewDim];
     
     [manager fetchAllReminders:^(NSArray *reminders)
     {
-        [self.view addSubview:collectionViewReminders];
-        [collectionViewReminders reloadData];
+        [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            imageViewLogo.layer.transform = CATransform3DMakeTranslation(20, 0, 0);
+
+        } completion:^(BOOL finished) {
+            
+            imageViewLogo.alpha = 0;
+            imageViewLogo.layer.transform = CATransform3DIdentity;
+            
+            [self.view addSubview:viewDepth];
+            [self.view addSubview:collectionViewReminders];
+            [self.view addSubview:segmentFilter];
+            [self.view addSubview:segmentCompleted];
+            
+            segmentFilter.layer.transform = CATransform3DMakeTranslation(0, -20, 0);
+            segmentCompleted.layer.transform = segmentFilter.layer.transform;
+            collectionViewReminders.layer.transform = CATransform3DMakeScale(0.9, 0.9, 1);
+            viewDepth.layer.transform = collectionViewReminders.layer.transform;
+            
+            [UIView animateWithDuration:0.2 animations:^{
+                viewDim.alpha = 1;
+            }];
+            
+            [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.1 options:0 animations:^{
+                collectionViewReminders.layer.transform = CATransform3DIdentity;
+                viewDepth.layer.transform = CATransform3DIdentity;
+                segmentFilter.layer.transform = CATransform3DIdentity;
+                segmentCompleted.layer.transform = CATransform3DIdentity;
+            } completion:nil];
+            
+            [manager filter:segmentFilter.selectedSegmentIndex];
+            [collectionViewReminders reloadData];
+        }];
     }];
     
     [textViewNote resignFirstResponder];
@@ -147,8 +228,62 @@
 
 -(void)hideReminders
 {
-    [collectionViewReminders removeFromSuperview];
     [textViewNote becomeFirstResponder];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        viewDim.alpha = 0;
+    }];
+    
+    imageViewLogo.layer.transform = CATransform3DMakeTranslation(20, 0, 0);
+    
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        collectionViewReminders.layer.transform = CATransform3DMakeScale(0.9, 0.9, 1);
+        segmentFilter.layer.transform = CATransform3DMakeTranslation(0, -20, 0);
+        segmentCompleted.layer.transform = CATransform3DMakeTranslation(0, -20, 0);
+        viewDepth.layer.transform = collectionViewReminders.layer.transform;
+    } completion:^(BOOL finished) {
+        
+        [viewDepth removeFromSuperview];
+        [collectionViewReminders removeFromSuperview];
+        [viewDim removeFromSuperview];
+        [segmentFilter removeFromSuperview];
+        [segmentCompleted removeFromSuperview];
+        
+        imageViewLogo.alpha = 1;
+        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            imageViewLogo.layer.transform = CATransform3DIdentity;
+        } completion:nil];
+    }];
+}
+
+-(void)segmentedFilterChanged:(UISegmentedControl *)control
+{
+    //filter em out
+    selectedIndex = INT_MAX;
+    
+    [manager filter:segmentFilter.selectedSegmentIndex];
+    [collectionViewReminders reloadData];
+}
+
+-(void)segmentedCompletedChanged:(UISegmentedControl *)control
+{
+    manager.showUncompleteOnly = control.selectedSegmentIndex;
+    [collectionViewReminders reloadData];
+}
+
+-(void)refreshReminders
+{
+    [manager fetchAllReminders:^(NSArray *reminders) {
+        [refresh endRefreshing];
+        [self updateReminders];
+    }];
+}
+
+-(void)updateReminders
+{
+    manager.showUncompleteOnly = segmentCompleted;
+    [manager filter:segmentFilter.selectedSegmentIndex];
+    [collectionViewReminders reloadData];
 }
 
 -(void)textViewDidDelete:(KNTextView *)textView
@@ -255,7 +390,7 @@
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:textViewNote animated:YES];
     
-    hud.color = [UIColor yellowColor];
+    hud.color = [KNGraphics tintColor];
     hud.labelColor = [UIColor blackColor];
     hud.mode = MBProgressHUDModeText;
     hud.labelText = message;
@@ -267,17 +402,42 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionViewReminders dequeueReusableCellWithReuseIdentifier:@"reminderCell" forIndexPath:indexPath];
+    KNReminderCell *cell = [collectionViewReminders dequeueReusableCellWithReuseIdentifier:@"reminderCell" forIndexPath:indexPath];
     
-    EKReminder *reminder = manager.reminders[indexPath.row];
+    EKReminder *reminder = manager.filtered[indexPath.row];
     
+    cell.reminder = reminder;
     
     return cell;
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return manager.reminders.count;
+    return manager.filtered.count;
+}
+
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return indexPath.row == selectedIndex ? CGSizeMake(cellSize.width, cellSize.height * 2) : cellSize;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return;
+    
+    if (selectedIndex != indexPath.row)
+    {
+        selectedIndex = indexPath.row;
+    }else{
+        //deselect
+        selectedIndex = INT_MAX;
+    }
+    
+    [collectionViewReminders performBatchUpdates:^{
+        [collectionViewReminders layoutSubviews];
+    } completion:^(BOOL finished) {
+        
+    }];
 }
 
 @end

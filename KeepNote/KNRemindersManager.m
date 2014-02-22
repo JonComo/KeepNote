@@ -11,6 +11,9 @@
 #import <EventKit/EventKit.h>
 
 @implementation KNRemindersManager
+{
+    KNFilter currentFilter;
+}
 
 +(KNRemindersManager *)sharedManager
 {
@@ -28,7 +31,7 @@
 {
     if (self = [super init]) {
         //init
-        
+        _showUncompleteOnly = YES;
     }
     
     return self;
@@ -50,11 +53,65 @@
     NSPredicate *predicate = [self.store predicateForRemindersInCalendars:nil];
     
     [self.store fetchRemindersMatchingPredicate:predicate completion:^(NSArray *reminders) {
+        
+        self.reminders = [reminders mutableCopy];
+        
+        //sort
+        [self.reminders sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            EKReminder *reminder1 = (EKReminder *)obj1;
+            EKReminder *reminder2 = (EKReminder *)obj2;
+            
+            return [reminder2.creationDate compare:reminder1.creationDate];
+        }];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.reminders = [reminders mutableCopy];
-            if (block) block(reminders);
+            if (block) block(self.reminders);
         });
     }];
+}
+
+-(void)setShowUncompleteOnly:(BOOL)showUncompleteOnly
+{
+    _showUncompleteOnly = showUncompleteOnly;
+    
+    [self filter:currentFilter];
+}
+
+-(void)filter:(KNFilter)filter
+{
+    currentFilter = filter;
+    
+    NSMutableArray *preFiltered = [NSMutableArray array];
+    
+    for (EKReminder *reminder in self.reminders)
+    {
+        if (self.showUncompleteOnly){
+            if (!reminder.completed)
+                [preFiltered addObject:reminder];
+        }else{
+            //show all
+            [preFiltered addObject:reminder];
+        }
+    }
+    
+    if (!self.filtered) self.filtered = [NSMutableArray array];
+    [self.filtered removeAllObjects];
+    
+    if(filter == KNFilterNotes)
+    {
+        for (EKReminder *reminder in preFiltered){
+            if (!reminder.dueDateComponents){
+                [self.filtered addObject:reminder];
+            }
+        }
+    }else if(filter == KNFilterUncomplete)
+    {
+        for (EKReminder *reminder in preFiltered){
+            if (reminder.dueDateComponents){
+                [self.filtered addObject:reminder];
+            }
+        }
+    }
 }
 
 @end
