@@ -8,13 +8,17 @@
 
 #import "KNReminderCell.h"
 
+#import "KNRemindersManager.h"
 #import <EventKit/EventKit.h>
 
 @implementation KNReminderCell
 {
     __weak IBOutlet UILabel *reminderTitle;
     __weak IBOutlet UIButton *buttonCheckMark;
+    __weak IBOutlet UIButton *buttonDelete;
     __weak IBOutlet UILabel *labelDate;
+    
+    __weak IBOutlet NSLayoutConstraint *constraintHorizontal;
 }
 
 static NSDateFormatter *formatter;
@@ -49,9 +53,33 @@ static NSDateFormatter *formatter;
     }
 }
 
+- (IBAction)deleteReminder:(id)sender
+{
+    NSError *error;
+    [[KNRemindersManager sharedManager].store removeReminder:self.reminder commit:YES error:&error];
+    
+    if (error) return;
+    
+    //remove this cell perhaps
+}
+
+-(void)setIsEditMode:(BOOL)isEditMode
+{
+    _isEditMode = isEditMode;
+    
+    //animate constraints
+    constraintHorizontal.constant = isEditMode ? 10 : -30;
+    [self layoutSubviews];
+}
+
 -(void)checkHit
 {
     self.reminder.completed = !self.reminder.completed;
+    
+    NSError *error;
+    [[KNRemindersManager sharedManager].store saveReminder:self.reminder commit:YES error:&error];
+    
+    if (error) return;
     
     buttonCheckMark.backgroundColor = self.reminder.completed ? [UIColor blackColor] : [UIColor whiteColor];
 }

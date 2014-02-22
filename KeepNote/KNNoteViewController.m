@@ -21,7 +21,7 @@
 #import <EventKit/EventKit.h>
 #import "KNReminderCell.h"
 
-#define EXAMPLES @[@"Meeting in 20 min", @"Perform ritual in 20 moons", @"Dinner in 5 min", @"Kick son out in 16 years", @"Hot date on 1/12/13, hopefully", @"Start diet in 15 s", @"Make money, then give it to charity, in 6 months", @"Run marathon in 2 weeks", @"Quit job in 2 hours", @"Swim in 6 months", @"Summer again in 1 solar orbit", @"Lunch in 10", @"Enjoy life in 12 hours", @"Pulse my laser twice in 2 femtoseconds", @"Murder the king in 12.5 moments", @"Be there in 1 moment", @"Learn about plank time units, in 0.5 PTUs", @"Start a new fashion trend in 1.2 generations", @"Enjoy the olympics in 2 olympiads", @"Wish my parents goodluck in 2 lustrums", @"Buy new shoes in 1 decade", @"Plan for the future, in 2 gigaseconds", @"Plot my position, in 2 fortnights", @"Doctors on Jan 1, 2014 8 am", @"Meeting on feb 2, 9am"]
+#define EXAMPLES @[@"Meeting in 20 min", @"Perform ritual in 20 moons", @"Dinner in 5 min", @"Kick son out in 16 years", @"Hot date on 1/12/13", @"Start diet in 15 days", @"Make money, then give it to charity, in 6 months", @"Run marathon in 2 weeks", @"Quit job in 2 hours", @"Swim in 6 months", @"Summer again in 1 solar orbit", @"Lunch in 10", @"Enjoy life in 12 hours", @"Pulse my laser twice in 2 femtoseconds", @"Murder the king in 12.5 moments", @"Be there in 1 moment", @"Learn about plank time units, in 0.5 PTUs", @"Start a new fashion trend in 1.2 generations", @"Enjoy the olympics in 2 olympiads", @"Wish my parents goodluck in 2 lustrums", @"Buy new shoes in 1 decade", @"Plan for the future, in 2 gigaseconds", @"Plot my position, in 2 fortnights", @"Doctors on Jan 1, 2014 8 am", @"Meeting on feb 2, 9am"]
 
 @interface KNNoteViewController () <KNInterpreterDelegate, KNTextViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 {
@@ -46,13 +46,15 @@
     UIView *viewDim;
     UIView *viewDepth;
     UICollectionView *collectionViewReminders;
-    NSInteger selectedIndex;
+    
     CGSize cellSize;
     
     UISegmentedControl *segmentFilter;
     UISegmentedControl *segmentCompleted;
     
     UIRefreshControl *refresh;
+    
+    BOOL isEditMode;
 }
 
 @end
@@ -90,7 +92,7 @@
     [formatterDay setDateFormat:@"EEEE"];
     [formatterMonthYear setDateFormat:@"MMM, d, yyyy"];
     
-    selectedIndex = INT_MAX;
+    isEditMode = NO;
     
     [self startExamples];
 }
@@ -170,6 +172,15 @@
         
         collectionViewReminders.dataSource = self;
         collectionViewReminders.delegate = self;
+        
+        UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight:)];
+        swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
+        
+        UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
+        swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
+        
+        [collectionViewReminders addGestureRecognizer:swipeRight];
+        [collectionViewReminders addGestureRecognizer:swipeLeft];
         
         refresh = [[UIRefreshControl alloc] init];
         [collectionViewReminders addSubview:refresh];
@@ -259,8 +270,6 @@
 -(void)segmentedFilterChanged:(UISegmentedControl *)control
 {
     //filter em out
-    selectedIndex = INT_MAX;
-    
     [manager filter:segmentFilter.selectedSegmentIndex];
     [collectionViewReminders reloadData];
 }
@@ -269,6 +278,24 @@
 {
     manager.showUncompleteOnly = control.selectedSegmentIndex;
     [collectionViewReminders reloadData];
+}
+
+-(void)swipeRight:(UISwipeGestureRecognizer *)swipe
+{
+    isEditMode = YES;
+    
+    for (KNReminderCell *cell in collectionViewReminders.visibleCells){
+        cell.isEditMode = isEditMode;
+    }
+}
+
+-(void)swipeLeft:(UISwipeGestureRecognizer *)swipe
+{
+    isEditMode = NO;
+    
+    for (KNReminderCell *cell in collectionViewReminders.visibleCells){
+        cell.isEditMode = isEditMode;
+    }
 }
 
 -(void)refreshReminders
@@ -281,7 +308,7 @@
 
 -(void)updateReminders
 {
-    manager.showUncompleteOnly = segmentCompleted;
+    manager.showUncompleteOnly = segmentCompleted.selectedSegmentIndex;
     [manager filter:segmentFilter.selectedSegmentIndex];
     [collectionViewReminders reloadData];
 }
@@ -348,11 +375,19 @@
     
     //If date found add one, otherwise add no due date
     if (interpreter.date) {
+        segmentFilter.selectedSegmentIndex = 1;
+        
         successString = @"Scheduled";
         
         NSDate *oneSecondLater = [NSDate dateWithTimeInterval:1 sinceDate:interpreter.date]; //Add one second on to each to deal with nanoseconds etc.!
         EKAlarm *alarm = [EKAlarm alarmWithAbsoluteDate:oneSecondLater];
         [reminder addAlarm:alarm];
+        
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        
+        reminder.dueDateComponents = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:interpreter.date];
+    }else{
+        segmentFilter.selectedSegmentIndex = 0;
     }
     
     [reminder setTitle:textViewNote.text];
@@ -371,6 +406,13 @@
         
         labelTime.alpha = 0;
         labelMonthYear.alpha = 0;
+        
+        //Bounce notepad
+        imageViewLogo.layer.transform = CATransform3DMakeRotation(-0.2, 0, 0, 1);
+        [UIView animateWithDuration:0.6 delay:0 usingSpringWithDamping:0.3 initialSpringVelocity:1 options:0 animations:^{
+            imageViewLogo.layer.transform = CATransform3DIdentity;
+        } completion:^(BOOL finished) {
+        }];
     }
 }
 
@@ -407,6 +449,7 @@
     EKReminder *reminder = manager.filtered[indexPath.row];
     
     cell.reminder = reminder;
+    cell.isEditMode = isEditMode;
     
     return cell;
 }
@@ -418,26 +461,7 @@
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return indexPath.row == selectedIndex ? CGSizeMake(cellSize.width, cellSize.height * 2) : cellSize;
-}
-
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return;
-    
-    if (selectedIndex != indexPath.row)
-    {
-        selectedIndex = indexPath.row;
-    }else{
-        //deselect
-        selectedIndex = INT_MAX;
-    }
-    
-    [collectionViewReminders performBatchUpdates:^{
-        [collectionViewReminders layoutSubviews];
-    } completion:^(BOOL finished) {
-        
-    }];
+    return cellSize;
 }
 
 @end

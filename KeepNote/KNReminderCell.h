@@ -12,6 +12,7 @@
 
 @interface KNReminderCell : UICollectionViewCell
 
+@property (nonatomic, assign) BOOL isEditMode;
 @property (nonatomic, weak) EKReminder *reminder;
 
 @end
