@@ -114,4 +114,17 @@
     }
 }
 
+-(NSError *)deleteReminder:(EKReminder *)reminder
+{
+    NSError *error;
+    [self.store removeReminder:reminder commit:YES error:&error];
+    
+    if (!error){
+        [self.filtered removeObject:reminder];
+        [self.reminders removeObject:reminder];
+    }
+    
+    return error;
+}
+
 @end

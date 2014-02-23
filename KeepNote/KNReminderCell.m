@@ -11,6 +11,8 @@
 #import "KNRemindersManager.h"
 #import <EventKit/EventKit.h>
 
+#import "KNGraphics.h"
+
 @implementation KNReminderCell
 {
     __weak IBOutlet UILabel *reminderTitle;
@@ -27,10 +29,7 @@ static NSDateFormatter *formatter;
 {
     _reminder = reminder;
     
-    buttonCheckMark.layer.borderColor = [UIColor blackColor].CGColor;
-    buttonCheckMark.layer.borderWidth = 2;
-    
-    buttonCheckMark.backgroundColor = reminder.completed ? [UIColor blackColor] : [UIColor whiteColor];
+    [buttonCheckMark setImage:[UIImage imageNamed:reminder.completed ? @"buttonCheckEnabled" : @"buttonCheck"] forState:UIControlStateNormal];
     
     if (buttonCheckMark.allTargets.count == 0)
         [buttonCheckMark addTarget:self action:@selector(checkHit) forControlEvents:UIControlEventTouchUpInside];
@@ -47,20 +46,24 @@ static NSDateFormatter *formatter;
         }
         
         labelDate.text = [formatter stringFromDate:reminder.dueDateComponents.date];
+        labelDate.backgroundColor = [KNGraphics tintColor];
         labelDate.alpha = 1;
     }else{
-        labelDate.alpha = 0;
+        labelDate.backgroundColor = [UIColor whiteColor];
+        labelDate.alpha = 0.4;
+        if (reminder.creationDate)
+            labelDate.text = [formatter stringFromDate:reminder.creationDate];
     }
 }
 
 - (IBAction)deleteReminder:(id)sender
 {
-    NSError *error;
-    [[KNRemindersManager sharedManager].store removeReminder:self.reminder commit:YES error:&error];
+    //remove from datasource
+    NSError *error = [[KNRemindersManager sharedManager] deleteReminder:self.reminder];
     
-    if (error) return;
-    
-    //remove this cell perhaps
+    //remove this cell
+    if (!error)
+        [[NSNotificationCenter defaultCenter] postNotificationName:KNReminderDeletedNotification object:self.reminder userInfo:nil];
 }
 
 -(void)setIsEditMode:(BOOL)isEditMode
@@ -68,7 +71,7 @@ static NSDateFormatter *formatter;
     _isEditMode = isEditMode;
     
     //animate constraints
-    constraintHorizontal.constant = isEditMode ? 10 : -30;
+    constraintHorizontal.constant = isEditMode ? 0 : -60;
     [self layoutSubviews];
 }
 
@@ -81,7 +84,7 @@ static NSDateFormatter *formatter;
     
     if (error) return;
     
-    buttonCheckMark.backgroundColor = self.reminder.completed ? [UIColor blackColor] : [UIColor whiteColor];
+    [buttonCheckMark setImage:[UIImage imageNamed:self.reminder.completed ? @"buttonCheckEnabled" : @"buttonCheck"] forState:UIControlStateNormal];
 }
 
 @end

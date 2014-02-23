@@ -75,26 +75,27 @@
 {
     [_delegate interpreterLookingForDate:self];
     
-    _date = nil;
-    NSString *lowerCaseString = [[NSString stringWithString:userInputString] lowercaseString];
-    NSString *noPeriodString = [[NSString stringWithString:userInputString] stringByReplacingOccurrencesOfString:@"." withString:@""];
+    self.date = nil;
+    
+    NSString *lowerCaseString = [userInputString lowercaseString];
+    NSString *noPeriodString = [userInputString stringByReplacingOccurrencesOfString:@"." withString:@""];
     
     [self findDateInString:noPeriodString];
     
-    if (_date) {
-        [_delegate interpreter:self foundDate:_date formattedString:[prettyFormatter stringFromDate:_date]];
+    if (self.date) {
+        [self.delegate interpreter:self foundDate:self.date formattedString:[prettyFormatter stringFromDate:self.date]];
         return;
     }
     
-    _date = [self dateFromInput:lowerCaseString];
-    if (_date)
+    self.date = [self dateFromInput:lowerCaseString];
+    if (self.date)
     {
-        [_delegate interpreter:self foundDate:_date formattedString:[prettyFormatter stringFromDate:_date]];
+        [self.delegate interpreter:self foundDate:self.date formattedString:[prettyFormatter stringFromDate:self.date]];
         return;
     }
     
-    if (!_date) {
-        [_delegate interpreterFailedToFindDate:self];
+    if (!self.date) {
+        [self.delegate interpreterFailedToFindDate:self];
     }
 }
 
@@ -103,8 +104,8 @@
 -(void)findDateInString:(NSString *)string
 {
     [detector enumerateMatchesInString:string options:0 range:NSMakeRange(0, string.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-        if (result.resultType == NSTextCheckingTypeDate)
-        {
+        
+        if (result.resultType == NSTextCheckingTypeDate){
             self.date = result.date;
         }
     }];

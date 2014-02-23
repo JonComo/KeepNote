@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define KNReminderDeletedNotification @"reminderDeleted"
+
 @class EKReminder;
 
 @interface KNReminderCell : UICollectionViewCell

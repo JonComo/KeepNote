@@ -15,6 +15,7 @@ typedef enum
 } KNFilter;
 
 @class EKEventStore;
+@class EKReminder;
 
 @interface KNRemindersManager : NSObject
 
@@ -30,5 +31,7 @@ typedef enum
 -(void)fetchAllReminders:(void(^)(NSArray *reminders))block;
 
 -(void)filter:(KNFilter)filter;
+
+-(NSError *)deleteReminder:(EKReminder *)reminder;
 
 @end

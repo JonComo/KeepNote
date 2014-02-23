@@ -68,8 +68,10 @@
     
     manager = [KNRemindersManager sharedManager];
     [manager requestAccessToStoreCompletion:^(BOOL granted) {
-        if (!granted)
-            [self showMessage:@"Error getting reminder access"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!granted)
+                [self showMessage:@"Error getting reminder access" inView:self.view];
+        });
     }];
     
     labelTime.alpha = 0;
@@ -94,6 +96,28 @@
     
     isEditMode = NO;
     
+    [[NSNotificationCenter defaultCenter] addObserverForName:KNReminderDeletedNotification object:nil queue:[NSOperationQueue new] usingBlock:^(NSNotification *note) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            for (UICollectionViewCell *cell in collectionViewReminders.visibleCells)
+            {
+                if ([cell isKindOfClass:[KNReminderCell class]])
+                {
+                    KNReminderCell *reminderCell = (KNReminderCell *)cell;
+                    if (reminderCell.reminder == note.object){
+                        //remove this cell
+                        
+                        NSIndexPath *indexToDelete = [collectionViewReminders indexPathForCell:reminderCell];
+                        if (manager.filtered.count > 0){
+                            [collectionViewReminders deleteItemsAtIndexPaths:@[indexToDelete]];
+                        }else{
+                            [collectionViewReminders reloadData];
+                        }
+                    }
+                }
+            }
+        });
+    }];
+    
     [self startExamples];
 }
 
@@ -101,7 +125,7 @@
 {
     [self showExample];
     
-    examplesTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(showExample) userInfo:nil repeats:YES];
+    examplesTimer = [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(showExample) userInfo:nil repeats:YES];
     wasShowingExamples = YES;
 }
 
@@ -138,8 +162,9 @@
 
 -(void)viewAllReminders
 {
-    if (!collectionViewReminders)
-    {
+    isEditMode = NO;
+    
+    if (!collectionViewReminders){
         float p = 20; //padding
         
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -163,6 +188,7 @@
         
         collectionViewReminders = [[UICollectionView alloc] initWithFrame:collectionViewFrame collectionViewLayout:layout];
         [collectionViewReminders registerNib:[UINib nibWithNibName:@"reminderCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"reminderCell"];
+        [collectionViewReminders registerNib:[UINib nibWithNibName:@"createCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"createCell"];
         
         collectionViewReminders.clipsToBounds = YES;
         collectionViewReminders.layer.cornerRadius = 3;
@@ -201,7 +227,7 @@
     [manager fetchAllReminders:^(NSArray *reminders)
     {
         [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-            imageViewLogo.layer.transform = CATransform3DMakeTranslation(20, 0, 0);
+            imageViewLogo.layer.transform = CATransform3DMakeTranslation(-20, 0, 0);
 
         } completion:^(BOOL finished) {
             
@@ -234,6 +260,7 @@
         }];
     }];
     
+    [self showDeleteTip];
     [textViewNote resignFirstResponder];
 }
 
@@ -245,7 +272,7 @@
         viewDim.alpha = 0;
     }];
     
-    imageViewLogo.layer.transform = CATransform3DMakeTranslation(20, 0, 0);
+    imageViewLogo.layer.transform = CATransform3DMakeTranslation(-20, 0, 0);
     
     [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         collectionViewReminders.layer.transform = CATransform3DMakeScale(0.9, 0.9, 1);
@@ -278,6 +305,16 @@
 {
     manager.showUncompleteOnly = control.selectedSegmentIndex;
     [collectionViewReminders reloadData];
+}
+
+-(void)showDeleteTip
+{
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"hasShownDeleteTip"]){
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasShownDeleteTip"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [self showMessage:@"Swipe right to edit" inView:collectionViewReminders];
+    }
 }
 
 -(void)swipeRight:(UISwipeGestureRecognizer *)swipe
@@ -330,14 +367,13 @@
         return NO;
     }
     
-    NSString *fullString = [textViewNote.text stringByReplacingCharactersInRange:range withString:text];
-    
-    [interpreter interpretString:fullString];
-    
     if ([text isEqualToString:@"\n"]){
         [self saveReminder];
         return NO;
     }
+    
+    NSString *fullString = [textViewNote.text stringByReplacingCharactersInRange:range withString:text];
+    [interpreter interpretString:fullString];
     
     return YES;
 }
@@ -367,7 +403,7 @@
 {
     if (textViewNote.text.length == 0) return;
     
-    [interpreter interpretString:textViewNote.text]; //Interpret once again to get the latest date
+    //[interpreter interpretString:textViewNote.text]; //Interpret once again to get the latest date
     
     EKReminder *reminder = [EKReminder reminderWithEventStore:manager.store];
     
@@ -398,10 +434,10 @@
     
     if (reminderError){
         NSLog(@"Error: %@", reminderError);
-        [self showMessage:@"Note failed to save"];
+        [self showMessage:@"Note failed to save" inView:textViewNote];
     }else{
         //Note saved successfully, show it!
-        [self showMessage:[NSString stringWithFormat:@"Note %@ \u2713", successString]];
+        [self showMessage:[NSString stringWithFormat:@"Note %@ \u2713", successString] inView:textViewNote];
         textViewNote.text = @"";
         
         labelTime.alpha = 0;
@@ -428,22 +464,28 @@
     [interpreter interpretString:textViewNote.text];
 }
 
--(void)showMessage:(NSString *)message
+-(void)showMessage:(NSString *)message inView:(UIView *)view
 {
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:textViewNote animated:YES];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     
     hud.color = [KNGraphics tintColor];
     hud.labelColor = [UIColor blackColor];
     hud.mode = MBProgressHUDModeText;
     hud.labelText = message;
     
-    [hud hide:YES afterDelay:1];
+    [hud hide:YES afterDelay:1.5];
 }
 
 //Collection view
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (manager.filtered.count == 0){
+        //no notes or reminders, show create cell
+        KNReminderCell *cell = [collectionViewReminders dequeueReusableCellWithReuseIdentifier:@"createCell" forIndexPath:indexPath];
+        return cell;
+    }
+    
     KNReminderCell *cell = [collectionViewReminders dequeueReusableCellWithReuseIdentifier:@"reminderCell" forIndexPath:indexPath];
     
     EKReminder *reminder = manager.filtered[indexPath.row];
@@ -456,12 +498,31 @@
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return manager.filtered.count;
+    if (manager.filtered.count == 0)
+    {
+        return 1; //create cell
+    }else{
+        return manager.filtered.count;
+    }
 }
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return cellSize;
+    if (manager.filtered.count == 0)
+    {
+        return collectionViewReminders.frame.size;
+    }else{
+        return cellSize;
+    }
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (manager.filtered.count == 0)
+    {
+        //tapped create cell
+        [self hideReminders];
+    }
 }
 
 @end

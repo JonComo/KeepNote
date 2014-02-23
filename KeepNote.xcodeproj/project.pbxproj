@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		862088D8166684DD00DF49CF /* KNInterpreter.m in Sources */ = {isa = PBXBuildFile; fileRef = 862088D7166684DD00DF49CF /* KNInterpreter.m */; };
 		863140B718B8596000F4708D /* KNGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = 863140B618B8596000F4708D /* KNGraphics.m */; };
+		8636438418BAA2E20006F04C /* createCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8636438318BAA2E20006F04C /* createCell.xib */; };
+		8636438618BAAE920006F04C /* buttonDelete.png in Resources */ = {isa = PBXBuildFile; fileRef = 8636438518BAAE920006F04C /* buttonDelete.png */; };
+		8636438918BAB01D0006F04C /* buttonCheck.png in Resources */ = {isa = PBXBuildFile; fileRef = 8636438718BAB01D0006F04C /* buttonCheck.png */; };
+		8636438A18BAB01D0006F04C /* buttonCheckEnabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 8636438818BAB01D0006F04C /* buttonCheckEnabled.png */; };
 		86752A4418B544E10023178E /* KNNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86752A4318B544E10023178E /* KNNoteViewController.m */; };
 		86752A4F18B5471E0023178E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86752A4E18B5471E0023178E /* Accelerate.framework */; };
 		86752A5318B54EC70023178E /* keepNoteLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 86752A5218B54EC70023178E /* keepNoteLogo.png */; };
@@ -38,6 +42,10 @@
 		862088D7166684DD00DF49CF /* KNInterpreter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNInterpreter.m; sourceTree = "<group>"; };
 		863140B518B8596000F4708D /* KNGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNGraphics.h; sourceTree = "<group>"; };
 		863140B618B8596000F4708D /* KNGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNGraphics.m; sourceTree = "<group>"; };
+		8636438318BAA2E20006F04C /* createCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = createCell.xib; sourceTree = "<group>"; };
+		8636438518BAAE920006F04C /* buttonDelete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonDelete.png; sourceTree = "<group>"; };
+		8636438718BAB01D0006F04C /* buttonCheck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonCheck.png; sourceTree = "<group>"; };
+		8636438818BAB01D0006F04C /* buttonCheckEnabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonCheckEnabled.png; sourceTree = "<group>"; };
 		86752A4218B544E10023178E /* KNNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KNNoteViewController.h; sourceTree = "<group>"; };
 		86752A4318B544E10023178E /* KNNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KNNoteViewController.m; sourceTree = "<group>"; };
 		86752A4E18B5471E0023178E /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
@@ -107,6 +115,7 @@
 				86901D6218B812CB008CB6F9 /* reminderCell.xib */,
 				86901D6418B81676008CB6F9 /* KNReminderCell.h */,
 				86901D6518B81676008CB6F9 /* KNReminderCell.m */,
+				8636438318BAA2E20006F04C /* createCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -189,6 +198,9 @@
 		869EA1E3165AB8E6005877A6 /* artwork */ = {
 			isa = PBXGroup;
 			children = (
+				8636438718BAB01D0006F04C /* buttonCheck.png */,
+				8636438818BAB01D0006F04C /* buttonCheckEnabled.png */,
+				8636438518BAAE920006F04C /* buttonDelete.png */,
 				86752A5718B55CE30023178E /* icons */,
 				86752A5218B54EC70023178E /* keepNoteLogo.png */,
 			);
@@ -247,9 +259,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8636438418BAA2E20006F04C /* createCell.xib in Resources */,
 				86752A5C18B55CE30023178E /* icon_120.png in Resources */,
+				8636438618BAAE920006F04C /* buttonDelete.png in Resources */,
 				869EA1CB165AB4EF005877A6 /* InfoPlist.strings in Resources */,
+				8636438918BAB01D0006F04C /* buttonCheck.png in Resources */,
 				869EA1DA165AB4EF005877A6 /* MainStoryboard.storyboard in Resources */,
+				8636438A18BAB01D0006F04C /* buttonCheckEnabled.png in Resources */,
 				86752A5F18B55D060023178E /* Images.xcassets in Resources */,
 				8687906B166960220072E178 /* Default@2x.png in Resources */,
 				8687906D166960240072E178 /* Default-568h@2x.png in Resources */,
@@ -362,7 +378,7 @@
 				INFOPLIST_FILE = "KeepNote/KeepNote-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "EE1D3424-0004-4327-86DE-AE18E0DE6CC5";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
