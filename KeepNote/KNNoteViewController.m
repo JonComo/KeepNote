@@ -96,29 +96,14 @@
     
     isEditMode = NO;
     
-    [[NSNotificationCenter defaultCenter] addObserverForName:KNReminderDeletedNotification object:nil queue:[NSOperationQueue new] usingBlock:^(NSNotification *note) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            for (UICollectionViewCell *cell in collectionViewReminders.visibleCells)
-            {
-                if ([cell isKindOfClass:[KNReminderCell class]])
-                {
-                    KNReminderCell *reminderCell = (KNReminderCell *)cell;
-                    if (reminderCell.reminder == note.object){
-                        //remove this cell
-                        
-                        NSIndexPath *indexToDelete = [collectionViewReminders indexPathForCell:reminderCell];
-                        if (manager.filtered.count > 0){
-                            [collectionViewReminders deleteItemsAtIndexPaths:@[indexToDelete]];
-                        }else{
-                            [collectionViewReminders reloadData];
-                        }
-                    }
-                }
-            }
-        });
-    }];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cellDeleted) name:KNReminderDeletedNotification object:nil];
     
     [self startExamples];
+}
+
+-(void)cellDeleted
+{
+    [collectionViewReminders reloadData];
 }
 
 -(void)startExamples
@@ -512,16 +497,28 @@
     {
         return collectionViewReminders.frame.size;
     }else{
+        KNReminderCell *cell = (KNReminderCell *)[collectionView cellForItemAtIndexPath:indexPath];
+        EKReminder *reminder = manager.filtered[indexPath.row];
+        //check if lable is too small
+        NSString *title = reminder.title;
+        CGRect rect = [title boundingRectWithSize:CGSizeMake(232, FLT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName: [UIFont fontWithName:@"Helvetica Bold" size:15]} context:NULL];
+        
+        if (cell.title.frame.size.height < rect.size.height){
+            return CGSizeMake(cellSize.width, 44 + ceil(rect.size.height));
+        }
+        
         return cellSize;
     }
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (manager.filtered.count == 0)
-    {
+    if (manager.filtered.count == 0){
         //tapped create cell
         [self hideReminders];
+    }else{
+        KNReminderCell *cell = (KNReminderCell *)[collectionViewReminders cellForItemAtIndexPath:indexPath];
+        [cell toggleComplete];
     }
 }
 

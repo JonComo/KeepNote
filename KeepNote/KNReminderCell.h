@@ -16,5 +16,9 @@
 
 @property (nonatomic, assign) BOOL isEditMode;
 @property (nonatomic, weak) EKReminder *reminder;
+@property (weak, nonatomic) IBOutlet UILabel *title;
+
+
+-(void)toggleComplete;
 
 @end

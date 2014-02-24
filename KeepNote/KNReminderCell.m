@@ -15,8 +15,7 @@
 
 @implementation KNReminderCell
 {
-    __weak IBOutlet UILabel *reminderTitle;
-    __weak IBOutlet UIButton *buttonCheckMark;
+    __weak IBOutlet UIImageView *imageViewCheck;
     __weak IBOutlet UIButton *buttonDelete;
     __weak IBOutlet UILabel *labelDate;
     
@@ -29,12 +28,14 @@ static NSDateFormatter *formatter;
 {
     _reminder = reminder;
     
-    [buttonCheckMark setImage:[UIImage imageNamed:reminder.completed ? @"buttonCheckEnabled" : @"buttonCheck"] forState:UIControlStateNormal];
+    labelDate.backgroundColor = [KNGraphics tintColor];
     
-    if (buttonCheckMark.allTargets.count == 0)
-        [buttonCheckMark addTarget:self action:@selector(checkHit) forControlEvents:UIControlEventTouchUpInside];
+    [imageViewCheck setImage:[UIImage imageNamed:reminder.completed ? @"buttonCheckEnabled" : @"buttonCheck"]];
     
-    reminderTitle.text = reminder.title;
+    self.title.text = reminder.title;
+    
+    labelDate.backgroundColor = [KNGraphics tintColor];
+    labelDate.textColor = [UIColor blackColor];
     
     if (reminder.dueDateComponents)
     {
@@ -45,14 +46,16 @@ static NSDateFormatter *formatter;
             [formatter setDateFormat:@"h:mm a, EEE, MMM d, yyyy"];
         }
         
-        labelDate.text = [formatter stringFromDate:reminder.dueDateComponents.date];
-        labelDate.backgroundColor = [KNGraphics tintColor];
+        if ([[NSDate date] compare:reminder.dueDateComponents.date] == NSOrderedDescending)
+        {
+            labelDate.backgroundColor = [UIColor redColor];
+            labelDate.textColor = [UIColor whiteColor];
+        }
+        
         labelDate.alpha = 1;
+        labelDate.text = [formatter stringFromDate:reminder.dueDateComponents.date];
     }else{
-        labelDate.backgroundColor = [UIColor whiteColor];
-        labelDate.alpha = 0.4;
-        if (reminder.creationDate)
-            labelDate.text = [formatter stringFromDate:reminder.creationDate];
+        labelDate.alpha = 0;
     }
 }
 
@@ -75,7 +78,7 @@ static NSDateFormatter *formatter;
     [self layoutSubviews];
 }
 
--(void)checkHit
+-(void)toggleComplete
 {
     self.reminder.completed = !self.reminder.completed;
     
@@ -84,7 +87,7 @@ static NSDateFormatter *formatter;
     
     if (error) return;
     
-    [buttonCheckMark setImage:[UIImage imageNamed:self.reminder.completed ? @"buttonCheckEnabled" : @"buttonCheck"] forState:UIControlStateNormal];
+    [imageViewCheck setImage:[UIImage imageNamed:self.reminder.completed ? @"buttonCheckEnabled" : @"buttonCheck"]];
 }
 
 @end
