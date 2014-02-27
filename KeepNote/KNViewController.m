@@ -93,7 +93,7 @@
     [store saveReminder:reminder commit:YES error:&reminderError];
     
     if (reminderError){
-        NSLog(@"Error: %@", reminderError);
+        //NSLog(@"Error: %@", reminderError);
         [self showConfirmationWithImage:[UIImage imageNamed:@"deleted"]];
     }else{
         //Note saved successfully, show it!
@@ -141,7 +141,7 @@
 {
     [store requestAccessToEntityType:EKEntityTypeReminder completion:^(BOOL granted, NSError *error) {
         if (error) {
-            NSLog(@"Error with request: %@", error);
+            //NSLog(@"Error with request: %@", error);
         }
         if (granted) {
             [self performSelectorOnMainThread:@selector(animateNoteOut) withObject:nil waitUntilDone:NO];

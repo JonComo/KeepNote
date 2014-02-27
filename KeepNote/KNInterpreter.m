@@ -115,7 +115,11 @@
 
 -(NSDate *)dateFromInput:(NSString *)input
 {
-    NSScanner *aScanner = [NSScanner scannerWithString:input];
+    NSString *clean = [[input componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"!?@\""]] componentsJoinedByString:@""];
+    
+    //NSLog(@"Clean: %@", clean);
+    
+    NSScanner *aScanner = [NSScanner scannerWithString:clean];
     
     float value;
     [aScanner setCharactersToBeSkipped:[[NSCharacterSet characterSetWithCharactersInString:@"1234567890."] invertedSet]];
@@ -126,7 +130,7 @@
     NSString *floatString = [NSString stringWithFormat:@"%f", value];
     BOOL foundUnit = [aScanner scanUpToString:floatString intoString:&unitString];
     
-    NSLog(@"Scanned and got %f %@", value, unitString);
+    //NSLog(@"Scanned and got %f %@", value, unitString);
     
     if (foundValue) {
         if (foundUnit) {

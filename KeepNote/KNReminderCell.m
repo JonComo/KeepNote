@@ -46,7 +46,7 @@ static NSDateFormatter *formatter;
             [formatter setDateFormat:@"h:mm a, EEE, MMM d, yyyy"];
         }
         
-        if ([[NSDate date] compare:reminder.dueDateComponents.date] == NSOrderedDescending)
+        if ([[NSDate date] compare:reminder.dueDateComponents.date] == NSOrderedDescending && !reminder.completed)
         {
             labelDate.backgroundColor = [UIColor redColor];
             labelDate.textColor = [UIColor whiteColor];
@@ -87,7 +87,7 @@ static NSDateFormatter *formatter;
     
     if (error) return;
     
-    [imageViewCheck setImage:[UIImage imageNamed:self.reminder.completed ? @"buttonCheckEnabled" : @"buttonCheck"]];
+    [self setReminder:self.reminder];
 }
 
 @end

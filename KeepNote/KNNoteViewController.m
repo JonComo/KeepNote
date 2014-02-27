@@ -418,7 +418,7 @@
     [manager.store saveReminder:reminder commit:YES error:&reminderError];
     
     if (reminderError){
-        NSLog(@"Error: %@", reminderError);
+        //NSLog(@"Error: %@", reminderError);
         [self showMessage:@"Note failed to save" inView:textViewNote];
     }else{
         //Note saved successfully, show it!
