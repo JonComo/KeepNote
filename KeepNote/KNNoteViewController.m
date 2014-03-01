@@ -202,7 +202,7 @@
         [refresh addTarget:self action:@selector(refreshReminders) forControlEvents:UIControlEventValueChanged];
         
         viewDim = [[UIView alloc] initWithFrame:self.view.frame];
-        viewDim.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+        viewDim.backgroundColor = [UIColor blackColor];
         [viewDim addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideReminders)]];
         
         viewDepth = [[UIView alloc] initWithFrame:collectionViewReminders.frame];
