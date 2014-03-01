@@ -70,7 +70,7 @@
     [manager requestAccessToStoreCompletion:^(BOOL granted) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (!granted)
-                [self showMessage:@"Error getting reminder access" inView:self.view];
+                [self showTitle:@"Oops!" message:@"Error getting reminder access" inView:self.view];
         });
     }];
     
@@ -99,6 +99,12 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cellDeleted) name:KNReminderDeletedNotification object:nil];
     
     [self startExamples];
+    
+    //preload segments
+    segmentFilter = [[UISegmentedControl alloc] initWithItems:@[@"Notes", @"Reminders"]];
+    segmentCompleted = [[UISegmentedControl alloc] initWithItems:@[@"All", @"Uncompleted"]];
+    segmentCompleted.selectedSegmentIndex = 1;
+    segmentFilter.selectedSegmentIndex = 0;
 }
 
 -(void)cellDeleted
@@ -160,15 +166,13 @@
         
         CGRect collectionViewFrame = CGRectMake(p, p*2, self.view.frame.size.width - p*2, self.view.frame.size.width - p*2);
         
-        segmentFilter = [[UISegmentedControl alloc] initWithItems:@[@"Notes", @"Reminders"]];
+        
         segmentFilter.frame = CGRectMake(p, collectionViewFrame.size.height + collectionViewFrame.origin.y + p, self.view.frame.size.width - p*2, 44);
         segmentFilter.tintColor = [KNGraphics tintColor];
-        segmentFilter.selectedSegmentIndex = 0;
         [segmentFilter addTarget:self action:@selector(segmentedFilterChanged:) forControlEvents:UIControlEventValueChanged];
         
-        segmentCompleted = [[UISegmentedControl alloc] initWithItems:@[@"All", @"Uncompleted"]];
+        
         segmentCompleted.frame = CGRectOffset(segmentFilter.frame, 0, segmentFilter.frame.size.height + p);
-        segmentCompleted.selectedSegmentIndex = 1;
         [segmentCompleted addTarget:self action:@selector(segmentedCompletedChanged:) forControlEvents:UIControlEventValueChanged];
         
         collectionViewReminders = [[UICollectionView alloc] initWithFrame:collectionViewFrame collectionViewLayout:layout];
@@ -298,7 +302,7 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasShownDeleteTip"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        [self showMessage:@"Swipe right to edit" inView:collectionViewReminders];
+        [self showTitle:nil message:@"Swipe right to edit" inView:collectionViewReminders];
     }
 }
 
@@ -419,10 +423,10 @@
     
     if (reminderError){
         //NSLog(@"Error: %@", reminderError);
-        [self showMessage:@"Note failed to save" inView:textViewNote];
+        [self showTitle:@"Oops!" message:@"Note failed to save. Check your iPhone's privacy settings." inView:self.view];
     }else{
         //Note saved successfully, show it!
-        [self showMessage:[NSString stringWithFormat:@"Note %@ \u2713", successString] inView:textViewNote];
+        [self showTitle:nil message:[NSString stringWithFormat:@"Note %@ \u2713", successString] inView:textViewNote];
         textViewNote.text = @"";
         
         labelTime.alpha = 0;
@@ -449,14 +453,17 @@
     [interpreter interpretString:textViewNote.text];
 }
 
--(void)showMessage:(NSString *)message inView:(UIView *)view
+-(void)showTitle:(NSString *)title message:(NSString *)message inView:(UIView *)view
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     
     hud.color = [KNGraphics tintColor];
     hud.labelColor = [UIColor blackColor];
+    hud.detailsLabelColor = [UIColor blackColor];
     hud.mode = MBProgressHUDModeText;
-    hud.labelText = message;
+    
+    hud.labelText = title;
+    hud.detailsLabelText = message;
     
     [hud hide:YES afterDelay:1.5];
 }
